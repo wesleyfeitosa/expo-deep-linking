@@ -13,8 +13,15 @@ export default function HomeScreen({ navigation }: Props) {
     Linking.getInitialURL().then(urlRedirect);
 
     Linking.addEventListener('url', event => {
+      urlRedirect(event.url);
+    });
+
+    return () => {
+      Linking.removeEventListener('url', event => {
         urlRedirect(event.url);
-  });}, []);
+      })
+    };
+  }, []);
 
   const urlRedirect = useCallback((url) => {
     if(!url) return;
