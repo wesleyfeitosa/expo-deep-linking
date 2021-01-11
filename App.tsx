@@ -1,21 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect } from "react";
+import { Text } from 'react-native';
+import * as Linking from 'expo-linking';
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function App() {
+import HomeScreen from "./src/components/HomeScreen";
+import NotificationsScreen from "./src/components/NotificationsScreen";
+import ProfileScreen from "./src/components/ProfileScreen";
+import SettingsScreen from "./src/components/SettingsScreen";
+import LinkingButtonScreen from "./src/components/LinkingButtonScreen";
+
+export type RootStackParamList = {
+  Home: { id: string } | undefined;
+  Profile: { id: string } | undefined;
+  Notifications: undefined;
+  Settings: undefined;
+  LinkingButton: undefined;
+};
+
+const {Navigator, Screen} = createStackNavigator<RootStackParamList>();
+
+function MyStack() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Navigator>
+      <Screen name="Home" component={HomeScreen} />
+      <Screen name="Notifications" component={NotificationsScreen} />
+      <Screen name="Profile" component={ProfileScreen} />
+      <Screen name="Settings" component={SettingsScreen} />
+      <Screen name="LinkingButton" component={LinkingButtonScreen} />
+    </Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer fallback={<Text>Loading...</Text>}>
+      <MyStack />
+    </NavigationContainer>
+  );
+}

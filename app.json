@@ -2,6 +2,7 @@
   "expo": {
     "name": "deep-linking",
     "slug": "deep-linking",
+    "scheme": "demo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
